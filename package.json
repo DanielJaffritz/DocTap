@@ -6,11 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "hocuspocus": "tsx hocuspocus.ts",
+    "dev:all": "concurrently \"pnpm dev\" \"pnpm hocuspocus\""
   },
   "dependencies": {
     "@better-auth/prisma-adapter": "^1.6.11",
     "@floating-ui/react": "^0.27.19",
+    "@hocuspocus/extension-database": "^4.0.0",
+    "@hocuspocus/extension-logger": "^4.1.0",
+    "@hocuspocus/provider": "^4.0.0",
+    "@hocuspocus/server": "^4.0.0",
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "@prisma/extension-accelerate": "^3.0.1",
@@ -18,6 +24,8 @@
     "@radix-ui/react-popover": "^1.1.15",
     "@react-email/components": "^1.0.12",
     "@tiptap/core": "^3.23.4",
+    "@tiptap/extension-collaboration": "^3.23.4",
+    "@tiptap/extension-collaboration-cursor": "^2.26.2",
     "@tiptap/extension-highlight": "^3.23.4",
     "@tiptap/extension-horizontal-rule": "^3.23.4",
     "@tiptap/extension-image": "^3.23.4",
@@ -31,13 +39,19 @@
     "@tiptap/react": "^3.23.4",
     "@tiptap/starter-kit": "^3.23.4",
     "better-auth": "^1.6.11",
+    "concurrently": "^9.2.1",
     "dotenv": "^17.4.2",
     "lodash.throttle": "^4.1.1",
+    "nanoid": "^4.0.0",
     "next": "16.2.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hotkeys-hook": "^5.3.2",
-    "resend": "^6.12.3"
+    "resend": "^6.12.3",
+    "tsx": "^4.22.2",
+    "y-prosemirror": "^1.3.7",
+    "y-webrtc": "^10.3.0",
+    "yjs": "^13.6.30"
   },
   "devDependencies": {
     "@base-ui/react": "^1.4.1",

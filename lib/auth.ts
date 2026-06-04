@@ -4,6 +4,7 @@ import { prisma } from "./prisma";
 import EmailTemplate from "@/components/emailTemplate";
 import { nextCookies } from "better-auth/next-js";
 import { resend } from "./resend";
+import "dotenv/config"
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {

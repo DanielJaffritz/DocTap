@@ -13,15 +13,17 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean   @default(false)
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sessions      Session[]
-  accounts      Account[]
+  id             String                 @id
+  name           String
+  email          String
+  emailVerified  Boolean                @default(false)
+  image          String?
+  createdAt      DateTime               @default(now())
+  updatedAt      DateTime               @updatedAt
+  sessions       Session[]
+  accounts       Account[]
+  ownedDocument  Document[]
+  collaborations DocumentCollaborator[]
 
   @@unique([email])
   @@map("user")
@@ -74,4 +76,30 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model Document {
+  id        String   @id @default(cuid())
+  title     String   @default("Sin título")
+  content   Bytes? // Y.js binary state (Uint8Array)
+  ownerId   String
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  collaborators DocumentCollaborator[]
+
+  @@map("document")
+}
+
+model DocumentCollaborator {
+  id         String   @id @default(cuid())
+  documentId String
+  userId     String
+  role       String   @default("editor") // "editor" | "viewer"
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([documentId, userId])
+  @@map("document_collaborator")
 }

@@ -73,7 +73,10 @@ import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils"
 // --- Styles ---
 import "@/components/tiptap-templates/simple/simple-editor.scss"
 
-import content from "@/components/tiptap-templates/simple/data/content.json"
+import { HocuspocusProvider } from "@hocuspocus/provider"
+import * as Y from "yjs"
+import Collaboration from "@tiptap/extension-collaboration"
+import CollaborationCursor from "@tiptap/extension-collaboration-cursor"
 
 const MainToolbarContent = ({
   onHighlighterClick,
@@ -183,7 +186,13 @@ const MobileToolbarContent = ({
   </>
 )
 
-export function SimpleEditor() {
+interface SimpleEditorProps {
+  documentId: string;
+  provider: HocuspocusProvider;
+  ydoc: Y.Doc
+  currentUser: { id: string; name: string; image?: string | null }
+}
+export function SimpleEditor({ documentId, provider, ydoc, currentUser }: SimpleEditorProps) {
   const isMobile = useIsBreakpoint()
   const { height } = useWindowSize()
   const [mobileView, setMobileView] = useState<"main" | "highlighter" | "link">(
@@ -209,6 +218,7 @@ export function SimpleEditor() {
           openOnClick: false,
           enableClickSelection: true,
         },
+        undoRedo: false,
       }),
       HorizontalRule,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
@@ -227,8 +237,10 @@ export function SimpleEditor() {
         upload: handleImageUpload,
         onError: (error) => console.error("Upload failed:", error),
       }),
+      Collaboration.configure({
+        document: ydoc,
+      }),
     ],
-    content,
   })
 
   const rect = useCursorVisibility({
@@ -250,8 +262,8 @@ export function SimpleEditor() {
           style={{
             ...(isMobile
               ? {
-                  bottom: `calc(100% - ${height - rect.y}px)`,
-                }
+                bottom: `calc(100% - ${height - rect.y}px)`,
+              }
               : {}),
           }}
         >
