@@ -40,7 +40,7 @@ export default async function DocumentPage({ params }: PageProps) {
   // Pasamos los datos esenciales al componente cliente del Editor
   return (
     <div className="container mx-auto p-4">
-      <SimpleEditorWrapper documentId={documentId} title={doc.title} currentUser={session.user} />
+      <SimpleEditorWrapper documentId={documentId} title={doc.title} currentUser={session.user} isOwner={isOwner} />
     </div>
   )
 }

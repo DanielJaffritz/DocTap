@@ -87,7 +87,8 @@ model Document {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  collaborators DocumentCollaborator[]
+  collaborators     DocumentCollaborator[]
+  collaborativeLink CollaborativeLink?
 
   @@map("document")
 }
@@ -102,4 +103,13 @@ model DocumentCollaborator {
 
   @@unique([documentId, userId])
   @@map("document_collaborator")
+}
+
+model CollaborativeLink {
+  id         String   @id
+  documentId String   @unique
+  expiresAt  DateTime
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@map("collaborative_link")
 }
