@@ -79,13 +79,14 @@ model Verification {
 }
 
 model Document {
-  id        String   @id @default(cuid())
-  title     String   @default("Sin título")
-  content   Bytes? // Y.js binary state (Uint8Array)
-  ownerId   String
-  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  title       String   @default("Sin título")
+  content     Bytes? // Y.js binary state (Uint8Array)
+  htmlPreview String?
+  ownerId     String
+  owner       User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   collaborators     DocumentCollaborator[]
   collaborativeLink CollaborativeLink?

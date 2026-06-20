@@ -5,7 +5,7 @@ import * as Y from "yjs"
 import { HocuspocusProvider } from "@hocuspocus/provider"
 import dynamic from "next/dynamic"
 import { changeTitle } from "@/features/dashboard/actions/docActions"
-import { generateLink } from "../actions/LinkActions"
+import { deleteLink, generateLink } from "../actions/LinkActions"
 import CopyButton from "./CopyButton"
 import 'dotenv/config'
 const SimpleEditor = dynamic(
@@ -32,6 +32,10 @@ export function SimpleEditorWrapper({ documentId, title, currentUser, isOwner }:
     const result = await generateLink(documentId);
     if (!result) return;
     setCollaborationLinkId(result.id)
+  }
+  async function handleLinkDeletion() {
+    await deleteLink(collaborationLinkId)
+    setCollaborationLinkId("")
   }
   useEffect(() => {
     const ydoc = new Y.Doc()
@@ -60,25 +64,34 @@ export function SimpleEditorWrapper({ documentId, title, currentUser, isOwner }:
   }
 
   return (
-    <div>
-      <div className="flex flex-row">
-        <form onSubmit={() => changeTitle(documentId, docTitle)}>
-          <input className="text-text text-2xl " type="text" value={docTitle} onChange={(e) => setDocTitle(e.target.value)} />
-        </form>
-        {isOwner &&
-          <div className="flex flex-row items-center gap-10">
-            {collaborationLinkId !== "" ?
-              <div className="flex flex-row items-center gap-2">
-                <h2>http://localhost:3000/invite/{collaborationLinkId}</h2>
-                <CopyButton textToCopy={`http://localhost:3000/invite/${collaborationLinkId}`} />
-              </div>
-              :
-              <button className="bg-primary text-text" onClick={handleLinkCreation}>Get Collaboration Link</button>
-            }
+    <div className="flex flex-col">
+      <div className="flex flex-row p-3">
+
+        {isOwner ?
+          <div>
+            <form onSubmit={() => changeTitle(documentId, docTitle)}>
+              <input className="text-text text-2xl " type="text" value={docTitle} onChange={(e) => setDocTitle(e.target.value)} />
+            </form>
+            <div className="flex flex-row items-center gap-10">
+              {collaborationLinkId !== "" ?
+                <div className="flex flex-row items-center gap-2">
+                  <CopyButton textToCopy={`http://localhost:3000/invite/${collaborationLinkId}`} />
+                  <button onClick={handleLinkDeletion} className="px-4 py-2 bg-red-500 text-text rounded hover:bg-red-400 transition-all">Delete Link</button>
+                </div>
+                :
+                <button className="px-4 py-2 bg-primary text-text rounded hover:bg-secondary transition-all" onClick={handleLinkCreation}>Get Collaboration Link</button>
+              }
+            </div>
+          </div>
+          :
+          <div>
+            <h1 className="text-text text-2xl">{docTitle}</h1>
           </div>
         }
       </div>
-      <SimpleEditor documentId={documentId} provider={providerRef.current} ydoc={ydocRef.current} currentUser={currentUser} />
+      <div>
+        <SimpleEditor documentId={documentId} provider={providerRef.current} ydoc={ydocRef.current} currentUser={currentUser} />
+      </div>
     </div>
   )
 }

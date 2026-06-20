@@ -1,7 +1,6 @@
 import { Server } from "@hocuspocus/server"
 import * as Y from "yjs"
 import { prisma } from "./lib/prisma"
-
 const server = new Server({
   port: 1234,
 
@@ -12,7 +11,7 @@ const server = new Server({
 
     const cookies = cookieHeader.split(";").reduce((acc: any, cookie) => {
       const [name, value] = cookie.trim().split("=");
-      if (name === '__Secure-better-auth.session_token') {
+      if (name === '__Secure-better-auth.session_token' || name === 'better-auth.session_token') {
         acc['session'] = value;
       }
       return acc;
@@ -63,6 +62,7 @@ const server = new Server({
   async onStoreDocument(data) {
     const docId = data.documentName
     const stateVector = Y.encodeStateAsUpdate(data.document)
+
 
     await prisma.document.update({
       where: { id: docId },

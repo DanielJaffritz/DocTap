@@ -76,7 +76,9 @@ import "@/components/tiptap-templates/simple/simple-editor.scss"
 import { HocuspocusProvider } from "@hocuspocus/provider"
 import * as Y from "yjs"
 import Collaboration from "@tiptap/extension-collaboration"
-import CollaborationCursor from "@tiptap/extension-collaboration-cursor"
+import CollaborationCaret from "@tiptap/extension-collaboration-caret"
+import stringToHex from "@/helpers/stringToHex"
+import { updateDocPreview } from "@/features/dashboard/actions/docActions"
 
 const MainToolbarContent = ({
   onHighlighterClick,
@@ -240,9 +242,37 @@ export function SimpleEditor({ documentId, provider, ydoc, currentUser }: Simple
       Collaboration.configure({
         document: ydoc,
       }),
+      CollaborationCaret.configure({
+        provider: provider,
+        user: {
+          name: currentUser.name,
+          color: stringToHex(currentUser.name)
+        }
+      })
     ],
   })
 
+  useEffect(() => {
+    if (!editor) return
+
+    const handleUpdate = () => {
+      // Obtenemos el HTML actual del editor
+      const html = editor.getHTML()
+
+      // Llamamos a la acción del servidor
+      updateDocPreview(documentId, html)
+    }
+
+    // Creamos un debouncer simple para esperar 2 segundos después de que el usuario deje de escribir
+    const timer = setTimeout(handleUpdate, 2000)
+
+    editor.on("update", () => clearTimeout(timer))
+
+    return () => {
+      clearTimeout(timer)
+      editor.off("update", handleUpdate)
+    }
+  }, [editor, documentId])
   const rect = useCursorVisibility({
     editor,
     overlayHeight: toolbarRef.current?.getBoundingClientRect().height ?? 0,

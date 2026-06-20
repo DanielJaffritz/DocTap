@@ -1,5 +1,6 @@
 'use server'
 import { prisma } from "@/lib/prisma";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
 import crypto from "crypto"
 
 export async function generateLink(documentId: string) {
@@ -11,6 +12,9 @@ export async function generateLink(documentId: string) {
       await prisma.collaborativeLink.delete({
         where: { documentId }
       })
+    }
+    else {
+      return verify
     }
   }
 
@@ -40,6 +44,21 @@ export async function makeCollaborator(collaborativeLinkId: string, userId: stri
   })
   return makeCollaborator
 
+}
+export async function deleteLink(linkId: string) {
+  try {
+    await prisma.collaborativeLink.delete({
+      where: { id: linkId }
+    })
+    return "success"
+  } catch (error) {
+    if (error instanceof PrismaClientKnownRequestError) {
+      if (error.code === "P2025") {
+        return "document not found"
+      }
+      return "unknown error, try again"
+    }
+  }
 }
 
 

@@ -3,6 +3,7 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma"
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/client";
+import { revalidatePath } from "next/cache";
 import { headers } from "next/headers"
 import { redirect } from "next/navigation";
 
@@ -25,45 +26,84 @@ export async function getDocs() {
   const session = await auth.api.getSession({
     headers: await headers()
   })
-  if (!session) return { docs: null, message: "could not find session" }
+  if (!session) return null
   const docs = await prisma.document.findMany({
-    where: { ownerId: session.user.id }
+    where: {
+      OR: [
+        { ownerId: session.user.id },
+        {
+          collaborators: {
+            some: {
+              userId: session.user.id
+            }
+          }
+        }
+      ]
+    }
   })
+  const { ownedDocs, collabDocs } = docs.reduce((acc: any, value: any) => {
+    if (value.ownerId === session.user.id) {
+      acc.ownedDocs.push(value);
+    } else {
+      acc.collabDocs.push(value);
+    }
+    return acc;
+  }, { ownedDocs: [], collabDocs: [] })
 
-  if (docs.length <= 0) return { docs: null, message: "no documents" }
+  return { ownedDocs, collabDocs }
 
-  return { docs: docs, message: "success" }
+}
 
+export async function searchDocs(search: string) {
+  const session = await auth.api.getSession({
+    headers: await headers()
+  })
+  if (!session) return null
+  if (search === "") return;
+  const result = await prisma.document.findMany({
+    where: {
+      AND: [
+        {
+          OR: [
+            { ownerId: session.user.id },
+            {
+              collaborators: {
+                some: {
+                  userId: session.user.id
+                }
+              }
+            }
+          ]
+        },
+        { title: { contains: search, mode: "insensitive" } }
+      ]
+    }
+  })
+  if (!result) return []
+  return result
 }
 export async function deleteDocs(documentId: string) {
-  try {
-    await prisma.document.delete({
-      where: { id: documentId }
-    })
-    return { status: "success", message: "success" }
-  } catch (error) {
-    if (error instanceof PrismaClientKnownRequestError) {
-      if (error.code === "P2025") {
-        return { status: "failure", message: "document not found" }
-      }
-      return { status: "failure", message: "unknown error, try again" }
-    }
-  }
+  await prisma.document.delete({
+    where: { id: documentId }
+  })
+  revalidatePath('/dashboard', "page");
 }
 export async function changeTitle(documentId: string, title: string) {
+  await prisma.document.update({
+    where: { id: documentId },
+    data: { title: title }
+
+  })
+  revalidatePath("/dashboard", "page")
+}
+export async function updateDocPreview(documentId: string, htmlPreview: string) {
   try {
     await prisma.document.update({
       where: { id: documentId },
-      data: { title: title }
-
+      data: { htmlPreview },
     })
-    return { status: "success", message: "success" }
   } catch (error) {
-    if (error instanceof PrismaClientKnownRequestError) {
-      if (error.code === "P2025") {
-        return { status: "failure", message: "document not found" }
-      }
-      return { status: "failure", message: "unknown error, try again" }
-    }
+    console.error("Error", error)
   }
 }
+
