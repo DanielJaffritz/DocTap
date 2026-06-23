@@ -1,5 +1,6 @@
 'use server'
 import { auth } from "@/lib/auth"
+import { authClient } from "@/lib/auth-client"
 import { APIError, isAPIError } from "better-auth/api"
 
 export async function LoginWithEmailAndPassword(values: LoginForm) {
@@ -18,3 +19,4 @@ export async function LoginWithEmailAndPassword(values: LoginForm) {
     return { success: false, message: "An unexpected error ocurred" }
   }
 }
+
