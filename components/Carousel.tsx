@@ -1,27 +1,23 @@
-import { useEffect, useState } from "react"
+'use client'
+import { useState } from "react"
 
-export default function Carousel({ children: slides, autoSlide = false, autoSlideInterval = 3000 }: { children: any, autoSlide: boolean, autoSlideInterval: number, isDashboard: boolean }) {
+export default function Carousel({ children: slides }: { children: string[] }) {
   const [curr, setCurr] = useState(0)
   const prev = () =>
     setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
   const next = () =>
     setCurr((curr) => (curr === slides.length - 1 ? 0 : curr + 1))
-  useEffect(() => {
-    if (!autoSlide) return;
-    const slideInterval = setInterval(next, autoSlideInterval)
-    return () => {
-      clearInterval(slideInterval)
-    }
-  }, [])
   return (
-    <div className="overflow-hidden relative">
-      <div className="flex transition-transform ease-out duration-500" style={{ transform: `translateX(-${curr * 100}%)` }}>{slides}</div>
+    <div className="border border-border overflow-hidden relative rounded-2xl">
+      <div className="flex transition-transform ease-out duration-500">
+        <img src={slides[curr]} />
+      </div>
       <div className="absolute inset-0 flex items-center justify-between p-4">
-        <button onClick={prev} className="p-1 rounded-full shadow bg-white text-text hover:bg-white">
-          dodo
+        <button onClick={prev} className="p-1 rounded-full shadow bg-white text-zinc-800 hover:bg-amber-100 cursor-pointer">
+          <svg width={20} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M6 12L11 7M6 12L11 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
         </button>
-        <button onClick={next} className="p-1 rounded-full shadow bg-white text-text hover:bg-white">
-          dido
+        <button onClick={next} className="p-1 rounded-full shadow bg-white text-zinc-800 hover:bg-amber-100 cursor-pointer">
+          <svg width={20} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M18 12L13 7M18 12L13 17" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
         </button>
       </div>
       <div className="absolute bottom-4 right-0 left-0">
