@@ -10,30 +10,30 @@ export default function Hero() {
     <div className="w-full flex flex-col items-center justify-center align-items gap-8 p-10">
       <h1 className="text-3xl md:text-6xl text-text text-shadow-lg font-extrabold"> Create and edit documents<br />with <span className="text-text_muted">your team</span> in real time</h1>
       <div className="flex flex-row gap-5 md:gap-10 items-center justify-center align-items">
-        <Link href="/signup" className="text-zinc-800 text-xl md:text-2xl p-2 md:p-4 bg-primary rounded-2xl hover:bg-sky-500">
+        <Link href="/signup" className="text-zinc-800 font-bold text-xl md:text-2xl p-2 md:p-4 bg-primary rounded-2xl hover:bg-sky-500">
           Get Started
         </Link>
-        <Link href="/login" className="text-zinc-800 text-xl md:text-2xl p-2 md:p-4 bg-secondary rounded-2xl hover:bg-sky-500">
+        <Link href="/login" className="text-zinc-800 font-bold text-xl md:text-2xl p-2 md:p-4 bg-primary rounded-2xl hover:bg-sky-500">
           Sign In
         </Link>
 
       </div>
       <div className="w-full h-150 flex flex-col items-center justify-center gap-5 md:mt-25">
-        <h2 className="text-2xl md:text-5xl text-text font-bold">All you need in one place</h2>
+        <h2 className="text-2xl md:text-6xl text-text font-semibold">All you need in one place</h2>
         <Carousel>
           {list}
         </Carousel>
       </div>
 
       <div className="flex flex-col items-center justify-center align-items gap-5 md:mt-25">
-        <h1 className="text-text text-2xl md:text-5xl font-bold">Just do the work</h1>
+        <h1 className="text-text text-2xl md:text-4xl font-bold">Just do the work</h1>
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
           <div className="text-2xs md:text-xl bg-background_secondary text-text p-6 rounded-2xl font-semibold flex flex-col gap-2 border border-border">
             <svg className="bg-secondary rounded-md stroke-background w-10 md:w-15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M13 3H8.2C7.0799 3 6.51984 3 6.09202 3.21799C5.71569 3.40973 5.40973 3.71569 5.21799 4.09202C5 4.51984 5 5.0799 5 6.2V17.8C5 18.9201 5 19.4802 5.21799 19.908C5.40973 20.2843 5.71569 20.5903 6.09202 20.782C6.51984 21 7.0799 21 8.2 21H10M13 3L19 9M13 3V7.4C13 7.96005 13 8.24008 13.109 8.45399C13.2049 8.64215 13.3578 8.79513 13.546 8.89101C13.7599 9 14.0399 9 14.6 9H19M19 9V10M9 17H11.5M9 13H14M9 9H10M14 21L16.025 20.595C16.2015 20.5597 16.2898 20.542 16.3721 20.5097C16.4452 20.4811 16.5147 20.4439 16.579 20.399C16.6516 20.3484 16.7152 20.2848 16.8426 20.1574L21 16C21.5523 15.4477 21.5523 14.5523 21 14C20.4477 13.4477 19.5523 13.4477 19 14L14.8426 18.1574C14.7152 18.2848 14.6516 18.3484 14.601 18.421C14.5561 18.4853 14.5189 18.5548 14.4903 18.6279C14.458 18.7102 14.4403 18.7985 14.405 18.975L14 21Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
             <h3>Full professional editor</h3>
           </div>
           <div className="text-2xs md:text-xl bg-background_secondary text-text p-6 rounded-2xl font-semibold flex flex-col gap-2 border border-border">
-            <svg className="bg-secondary rounded-md stroke-background w-10 md:w-15" viewBox="0 0 24 24  fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 21C4 17.134 7.13401 14 11 14C11.3395 14 11.6734 14.0242 12 14.0709M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7ZM12.5898 21L14.6148 20.595C14.7914 20.5597 14.8797 20.542 14.962 20.5097C15.0351 20.4811 15.1045 20.4439 15.1689 20.399C15.2414 20.3484 15.3051 20.2848 15.4324 20.1574L19.5898 16C20.1421 15.4477 20.1421 14.5523 19.5898 14C19.0376 13.4477 18.1421 13.4477 17.5898 14L13.4324 18.1574C13.3051 18.2848 13.2414 18.3484 13.1908 18.421C13.1459 18.4853 13.1088 18.5548 13.0801 18.6279C13.0478 18.7102 13.0302 18.7985 12.9948 18.975L12.5898 21Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
+            <svg className="bg-secondary rounded-md stroke-background w-10 md:w-15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M4 21C4 17.134 7.13401 14 11 14C11.3395 14 11.6734 14.0242 12 14.0709M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7ZM12.5898 21L14.6148 20.595C14.7914 20.5597 14.8797 20.542 14.962 20.5097C15.0351 20.4811 15.1045 20.4439 15.1689 20.399C15.2414 20.3484 15.3051 20.2848 15.4324 20.1574L19.5898 16C20.1421 15.4477 20.1421 14.5523 19.5898 14C19.0376 13.4477 18.1421 13.4477 17.5898 14L13.4324 18.1574C13.3051 18.2848 13.2414 18.3484 13.1908 18.421C13.1459 18.4853 13.1088 18.5548 13.0801 18.6279C13.0478 18.7102 13.0302 18.7985 12.9948 18.975L12.5898 21Z" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> </g></svg>
             <h3>Collaborate with your teammates as you want</h3>
           </div>
           <div className="text-2xs md:text-xl bg-background_secondary text-text p-6 rounded-2xl font-semibold flex flex-col gap-2 border border-border">
@@ -49,15 +49,11 @@ export default function Hero() {
       <div className="w-full mt-25 flex flex-col text-text bg-linear-to-b md:bg-linear-to-r to-background via-background_secondary from-border rounded-2xl p-10 gap-10">
         <h1 className="font-bold text-2xl md:text-4xl">What are you waiting for?</h1>
         <div>
-          <Link href='/signup' className="bg-primary rounded-md p-3 hover:bg-secondary text-zinc-800 text-xl md:text-3xl font-semibold">
+          <Link href='/signup' className="font-bold bg-primary rounded-md p-3 hover:bg-secondary text-zinc-800 text-xl md:text-3xl ">
             Get Started
           </Link>
         </div>
       </div>
-
-
-    </div >
-
+    </div>
   )
 }
-
