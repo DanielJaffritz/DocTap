@@ -75,7 +75,7 @@ export function SimpleEditorWrapper({ documentId, title, currentUser, isOwner }:
             <div className="flex flex-row items-center gap-10">
               {collaborationLinkId !== "" ?
                 <div className="flex flex-row items-center gap-2">
-                  <CopyButton textToCopy={`http://localhost:3000/invite/${collaborationLinkId}`} />
+                  <CopyButton textToCopy={`${process.env.BASE_URL}/invite/${collaborationLinkId}`} />
                   <button onClick={handleLinkDeletion} className="px-4 py-2 bg-red-500 text-text rounded hover:bg-red-400 transition-all">Delete Link</button>
                 </div>
                 :

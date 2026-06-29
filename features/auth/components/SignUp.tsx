@@ -19,7 +19,7 @@ export default function SignUp() {
     const result = await signUpWithEmailAndPassword(values);
     setStatusText(result.message)
     if (result.success) {
-      router.push(`/signup/verification?email=${formData.get('email') as string}`);
+      router.push("/dashboard");
     }
 
 

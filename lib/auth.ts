@@ -10,26 +10,26 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
-  trustedOrigins: [process.env.BETTER_AUTH_URL as string],
+  trustedOrigins: [process.env.BASE_URL as string],
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 8,
     maxPasswordLength: 20,
-    requireEmailVerification: true,
-    autoSignIn: false,
+    requireEmailVerification: false,
+    autoSignIn: true,
   },
   emailVerification: {
     sendOnSignUp: true,
     sendVerificationEmail: async ({ user, url }, request) => {
       await resend.emails.send({
         from: "Acme <onboarding@resend.dev>",
-        to: "delivered@resend.dev",
+        to: user.email,
         subject: "Verify your email address",
         react: EmailTemplate({ firstName: user.name, verifyUrl: url }),
       })
     }
   },
-  baseURL: process.env.BETTER_AUTH_URL as string,
+  baseURL: process.env.BASE_URL as string,
   socialProviders: {
     google: {
       clientId: process.env.CLIENT_ID as string,
