@@ -27,7 +27,8 @@ export default function SignUp() {
   }
   async function LoginWithGoogle() {
     await authClient.signIn.social({
-      provider: "google"
+      provider: "google",
+      callbackURL: "/dahboard"
     })
     router.push('dashboard')
   }
