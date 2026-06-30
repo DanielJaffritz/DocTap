@@ -40,7 +40,7 @@ export function SimpleEditorWrapper({ documentId, title, currentUser, isOwner }:
   useEffect(() => {
     const ydoc = new Y.Doc()
     const provider = new HocuspocusProvider({
-      url: process.env.WEBSOCKET_URL as string,
+      url: process.env.WEBSOCKET_URL || "ws://localhost:1234",
       name: documentId,
       document: ydoc,
       onConnect: () => setIsReady(true),
