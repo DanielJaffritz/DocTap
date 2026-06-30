@@ -8,7 +8,7 @@
     "postinstall": "prisma generate",
     "start": "next start",
     "lint": "eslint",
-    "hocuspocus": "node hocuspocus.ts",
+    "hocuspocus": "tsx hocuspocus.ts",
     "dev:all": "concurrently \"pnpm dev\" \"pnpm hocuspocus\""
   },
   "dependencies": {
